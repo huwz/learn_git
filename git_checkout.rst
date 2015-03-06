@@ -78,7 +78,7 @@ git checkout
 如果本地的 test 自动追踪了服务器的 test，则可以将指令简化为 ``git push``。
 
 如何建立这种自动追踪关系呢？
-在新建分支的时候加上 ``--track <remote>`` 选项即可。
+在新建分支的时候加上 ``-t/--track <remote>`` 选项即可。
 该选项会在版本配置文件 config 中增加两项内容：``branch.<name>.remote`` 和 ``branch.<name>.merge``。
 在前面的示例中，config 文件新增如下内容：
 
@@ -99,7 +99,12 @@ git checkout
 * ``git checkout <non-existed_branch>``
 * ``git branch <branch>``
 
-如果需要指定特定追踪的远端分支，则需要借助 ``--track``。
+如果需要指定特定追踪的远端分支，则需要借助 ``-t/--track``。
 
-在没有加 ``--track`` 选项的情况下，如何取消自动追踪呢。
+在没有加 ``-t/--track`` 选项的情况下，如何取消自动追踪呢。
 添加全局配置项 ``branch.autosetupmerge``，指令为 ``git config branch.autosetupmerge false``。
+
+在有 ``-t/--track`` 选项的情况下，如果没有 ``-b``，则新分支名称继承自远端跟踪的分支。
+具体方法是查询本地远端的 ``refspec``，将删除 ``*`` 前面的部分。
+比如 ``origin/hack`` （或者 ``remote/origin/hack``，甚至 ``refs/remotes/origin/hack``），则新分支名称为 ``hack``。
+如果给定的名称中没有斜杠，或者上述的猜测结果是空的，则放弃。

@@ -14,3 +14,4 @@ git 学习
    git_add
    git_checkout
    git_branch
+   refspec
